@@ -1,0 +1,27 @@
+# Split data into independent variable: X and dependent variable:y
+X = du.drop(columns=["Date/Time","Weather"])
+y = du["Weather"]
+
+# Show first 5 rows of X:
+print ("The first 5 rows of my x_variables")
+X.head(15)
+
+# Split X and y into Training(75%) and Testing(25%) sets:
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+
+# Train the decision tree classifier
+dt_classifier = DecisionTreeClassifier(random_state=42)
+dt_classifier.fit(X_train, y_train)
+
+
+
+# Predict using decision tree classifier
+y_pred_dt = dt_classifier.predict(X_test)
+
+
+# Evaluation metrics
+print("Decision Tree Classifier:")
+print("Accuracy:", accuracy_score(y_test, y_pred_dt))
+print("Recall:", recall_score(y_test, y_pred_dt, average='weighted', zero_division=1))
+print("F1-score:", f1_score(y_test, y_pred_dt, average='weighted', zero_division=1))
+print ("precision", precision_score(y_test, y_pred_dt, average='weighted', zero_division=1))
